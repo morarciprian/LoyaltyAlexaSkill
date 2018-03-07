@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
 @model LoginViewModel
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> SignInManager
 
 @{
     ViewData["Title"] = "Log in";

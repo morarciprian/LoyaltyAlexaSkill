@@ -20,8 +20,8 @@ namespace LoyaltyAlexaSkill.Controllers
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> _userManager;
+        private readonly SignInManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
@@ -30,8 +30,8 @@ namespace LoyaltyAlexaSkill.Controllers
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
         public ManageController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
+          UserManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> userManager,
+          SignInManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
@@ -527,7 +527,7 @@ namespace LoyaltyAlexaSkill.Controllers
                 unformattedKey);
         }
 
-        private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
+        private async Task LoadSharedKeyAndQrCodeUriAsync(Microsoft.AspNetCore.Identity.MongoDB.IdentityUser user, EnableAuthenticatorViewModel model)
         {
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))

@@ -1,5 +1,5 @@
 ﻿@using LoyaltyAlexaSkill.Views.Manage
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

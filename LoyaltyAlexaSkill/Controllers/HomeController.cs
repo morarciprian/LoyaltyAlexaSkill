@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LoyaltyAlexaSkill.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LoyaltyAlexaSkill.Controllers
 {
@@ -15,6 +16,7 @@ namespace LoyaltyAlexaSkill.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

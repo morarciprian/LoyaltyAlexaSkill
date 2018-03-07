@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using LoyaltyAlexaSkill.Data;
 using LoyaltyAlexaSkill.Models;
 using LoyaltyAlexaSkill.Services;
+using LoyaltyAlexaSkill.Authentication;
 
 namespace LoyaltyAlexaSkill
 {
@@ -26,17 +27,21 @@ namespace LoyaltyAlexaSkill
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentityWithMongoStores("mongodb://localhost/myDB").AddDefaultTokenProviders();
+            //services.AddIdentity<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser, Microsoft.AspNetCore.Identity.MongoDB.IdentityRole>();
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddAuthentication().AddOAuth("MIllersoft", options => AuthenticationMiddleware.SetOAuth2Options(options));
 
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using LoyaltyAlexaSkill.Models;
 using LoyaltyAlexaSkill.Models.AccountViewModels;
 using LoyaltyAlexaSkill.Services;
+using Microsoft.AspNetCore.Identity.MongoDB;
 
 namespace LoyaltyAlexaSkill.Controllers
 {
@@ -20,14 +21,15 @@ namespace LoyaltyAlexaSkill.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        
+        private readonly UserManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> _userManager;
+        private readonly SignInManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> userManager,
+            SignInManager<Microsoft.AspNetCore.Identity.MongoDB.IdentityUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
@@ -220,7 +222,7 @@ namespace LoyaltyAlexaSkill.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Microsoft.AspNetCore.Identity.MongoDB.IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -310,7 +312,7 @@ namespace LoyaltyAlexaSkill.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Microsoft.AspNetCore.Identity.MongoDB.IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
